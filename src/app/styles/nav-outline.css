@@ -1,0 +1,101 @@
+/* Uiverse.io nav outline effect – adapted for Artisan's Anchor */
+
+.nav-outline-svg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nav-outline-rect {
+  stroke-dashoffset: 5;
+  stroke-dasharray: 0 0 10 40 10 40;
+  transition: 0.5s;
+  stroke: #c6a15b;
+}
+
+.nav-outline-wrapper {
+  position: relative;
+  width: 580px;
+  height: 44px;
+}
+
+.nav-outline-container:hover .nav-outline-svg .nav-outline-rect {
+  /* freeze animation when container is hovered */
+  transition: 999999s;
+  stroke-dashoffset: 1;
+  stroke-dasharray: 0;
+}
+
+.nav-outline-container {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 14, 8, 0.45);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.4em;
+}
+
+.nav-outline-btn {
+  padding: 0.4em 1.2em;
+  color: #d8d8d8;
+  cursor: pointer;
+  transition: 0.1s;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.nav-outline-btn:hover {
+  background: rgba(198, 161, 91, 0.1);
+  color: #c6a15b;
+}
+
+/*
+  Stroke-dasharray values calculated for a 580×44 rect (pathLength="100").
+  Perimeter = 2*(580+44) = 1248px → 1 unit = 12.48px
+  Top edge: 46.47u | Right: 3.53u | Bottom: 46.47u | Left: 3.53u
+  5 buttons in space-around → centers at 58, 174, 290, 406, 522 px
+  Highlight half-width = 3 units (~37px); top segments + mirrored bottom segments.
+  Format: 0 gap1 draw gap2 draw gap3  (all sum to 100)
+*/
+
+/* btn1 – Collection (center x=58px → 4.65u) */
+.nav-outline-btn:nth-child(1):hover ~ svg .nav-outline-rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 1.65 6 81.18 6 5.17;
+}
+
+/* btn2 – Craft (center x=174px → 13.94u) */
+.nav-outline-btn:nth-child(2):hover ~ svg .nav-outline-rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 10.94 6 62.59 6 14.47;
+}
+
+/* btn3 – Artisans (center x=290px → 23.24u) */
+.nav-outline-btn:nth-child(3):hover ~ svg .nav-outline-rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 20.24 6 44 6 23.76;
+}
+
+/* btn4 – Story (center x=406px → 32.53u) */
+.nav-outline-btn:nth-child(4):hover ~ svg .nav-outline-rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 29.53 6 25.41 6 33.06;
+}
+
+/* btn5 – Contact (center x=522px → 41.83u) */
+.nav-outline-btn:nth-child(5):hover ~ svg .nav-outline-rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 38.83 6 6.82 6 42.35;
+}
+
+/* Fallback: reset to idle animated state when hovering any button */
+.nav-outline-btn:hover ~ .nav-outline-svg .nav-outline-rect {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 0 10 40 10 40;
+  transition: 0.5s !important;
+}

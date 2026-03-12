@@ -1,0 +1,78 @@
+/* ────────────────────────────────────────────────────────────
+   Craft Carousel  –  adapted from supah's scroll carousel
+   ──────────────────────────────────────────────────────────── */
+
+.craft-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.craft-carousel-wrapper:active {
+  cursor: grabbing;
+}
+
+/* ── individual card ── */
+.craft-carousel-item {
+  --items: 4;
+  --width:  clamp(240px, 28vw, 340px);
+  --height: clamp(360px, 46vw, 490px);
+
+  /* position offset driven by --active (set via JS) */
+  --x:       calc(var(--active) * 800%);
+  --y:       calc(var(--active) * 200%);
+  --rot:     calc(var(--active) * 120deg);
+  --opacity: calc(var(--zIndex) / var(--items) * 3 - 2);
+
+  overflow: hidden;
+  position: absolute;
+  z-index:  var(--zIndex);
+  width:    var(--width);
+  height:   var(--height);
+  /* centre the card */
+  margin: calc(var(--height) * -0.5) 0 0 calc(var(--width) * -0.5);
+  top:  50%;
+  left: 50%;
+  transform-origin: 0% 100%;
+  transform: translate(var(--x), var(--y)) rotate(var(--rot));
+  transition: transform 0.8s cubic-bezier(0, 0.02, 0, 1);
+  border-radius: 4px;
+  box-shadow: 0 12px 50px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* ── box = visible face of card ── */
+.craft-carousel-box {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: var(--opacity);
+  transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+}
+
+/* ── subtle gradient veil ── */
+.craft-carousel-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    transparent 30%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── scroll hint pill ── */
+.craft-scroll-hint {
+  animation: craft-hint-bounce 2.4s ease-in-out infinite;
+}
+
+@keyframes craft-hint-bounce {
+  0%, 100% { transform: translateY(0); opacity: .4; }
+  50%       { transform: translateY(4px); opacity: .7; }
+}
