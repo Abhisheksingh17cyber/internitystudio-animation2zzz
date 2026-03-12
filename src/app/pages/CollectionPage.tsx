@@ -1,19 +1,15 @@
 import { Navbar } from "../components/Navbar";
-import { Hero } from "../components/Hero";
-import { TrustBadges } from "../components/TrustBadges";
 import { FeaturedProducts } from "../components/FeaturedProducts";
 import { Newsletter } from "../components/Newsletter";
 import { Footer } from "../components/Footer";
 
-export function Home() {
+export function CollectionPage() {
   return (
-    <>
+    <div className="pt-24 min-h-screen bg-[#0B0B0B] text-[#F5F4F0]">
       <Navbar />
-      <Hero />
-      <TrustBadges />
       <FeaturedProducts />
       <Newsletter />
       <Footer />
-    </>
+    </div>
   );
 }

@@ -1,12 +1,33 @@
 import { Anchor, Instagram, Twitter, Facebook, Mail, MapPin, Phone } from "lucide-react";
+import { useNavigate } from "react-router";
+import logoImage from "../../assets/logo.png";
 
 const footerLinks = {
-  collection: ["Handmade Decor", "Artisan Jewelry", "Handwoven Textiles", "Wooden Crafts", "Ceramics"],
-  company: ["Our Story", "The Artisans", "Craft Process", "Sustainability", "Press"],
-  support: ["Care Guide", "Shipping", "Returns", "FAQ", "Contact Us"],
+  collection: [
+    { label: "Handmade Decor", href: "/collection" },
+    { label: "Artisan Jewelry", href: "/collection" },
+    { label: "Handwoven Textiles", href: "/collection" },
+    { label: "Wooden Crafts", href: "/collection" },
+    { label: "Ceramics", href: "/collection" }
+  ],
+  company: [
+    { label: "Our Story", href: "/craft" },
+    { label: "The Artisans", href: "/artisans" },
+    { label: "Craft Process", href: "/craft" },
+    { label: "Sustainability", href: "/craft" },
+    { label: "Press", href: "/contact" }
+  ]
 };
 
 export function Footer() {
+  const navigate = useNavigate();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    navigate(href);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer id="contact" className="bg-[#0B0B0B] border-t border-[#C6A15B]/10">
       {/* Main Footer */}
@@ -14,10 +35,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2 text-center md:text-left">
-            <a href="#" className="flex items-center justify-center md:justify-start gap-2 mb-6 group">
-              <Anchor
-                size={20}
-                className="text-[#C6A15B] transition-transform duration-300 group-hover:rotate-12"
+            <div 
+              onClick={(e) => handleLinkClick(e as any, "/")}
+              className="flex items-center justify-center md:justify-start gap-2 mb-6 group cursor-pointer"
+            >
+              <img 
+                src={logoImage} 
+                alt="Artisan's Anchor Logo" 
+                className="w-6 h-6 object-contain transition-transform duration-300 group-hover:rotate-12"
               />
               <span
                 className="text-[#F5F4F0] tracking-[0.2em] uppercase text-sm font-medium"
@@ -25,7 +50,7 @@ export function Footer() {
               >
                 Artisan's Anchor
               </span>
-            </a>
+            </div>
 
             <p
               className="text-[#D8D8D8]/60 mb-8 leading-relaxed max-w-sm mx-auto md:mx-0 text-sm md:text-[0.8rem]"
@@ -62,14 +87,15 @@ export function Footer() {
               Collection
             </p>
             <ul className="space-y-4 md:space-y-3">
-              {footerLinks.collection.map((link) => (
-                <li key={link}>
+              {footerLinks.collection.map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
+                    onClick={(e) => handleLinkClick(e, item.href)}
                     className="text-[#D8D8D8]/60 hover:text-[#C6A15B] transition-colors duration-300 text-sm md:text-xs tracking-[0.08em]"
                     style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300 }}
                   >
-                    {link}
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -85,14 +111,15 @@ export function Footer() {
               Company
             </p>
             <ul className="space-y-4 md:space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link}>
+              {footerLinks.company.map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
+                    onClick={(e) => handleLinkClick(e, item.href)}
                     className="text-[#D8D8D8]/60 hover:text-[#C6A15B] transition-colors duration-300 text-sm md:text-xs tracking-[0.08em]"
                     style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300 }}
                   >
-                    {link}
+                    {item.label}
                   </a>
                 </li>
               ))}

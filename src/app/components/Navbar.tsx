@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Anchor, ShoppingBag } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { Btn17 } from "./Btn17";
-import { useCart } from "../context/CartContext";
 import { useNavigate, useLocation } from "react-router";
+import { useCart } from "../context/CartContext";
+import logoImage from "../../assets/logo.png";
 import "../styles/nav-outline.css";
 
 const navLinks = [
-  { label: "Collection", href: "#collection" },
-  { label: "Craft", href: "#craft" },
-  { label: "Artisans", href: "#artisans" },
-  { label: "Story", href: "#story" },
-  { label: "Contact", href: "#contact" },
+  { label: "Collection", href: "/collection" },
+  { label: "Craft", href: "/craft" },
+  { label: "Artisans", href: "/artisans" },
+  { label: "Story", href: "/craft" }, // Maps to Craft page which has AboutCraft
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
@@ -28,14 +29,8 @@ export function Navbar() {
 
   function handleNavClick(href: string) {
     setIsOpen(false);
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    } else {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    }
+    navigate(href);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   return (
@@ -49,14 +44,14 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
         {/* ── Logo ── */}
-        <a
-          href="/"
-          onClick={(e) => { e.preventDefault(); navigate("/"); }}
-          className="flex items-center gap-2 group shrink-0"
+        <div
+          onClick={() => { setIsOpen(false); navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          className="flex items-center gap-2 group shrink-0 cursor-pointer"
         >
-          <Anchor
-            size={20}
-            className="text-[#C6A15B] transition-transform duration-300 group-hover:rotate-12"
+          <img 
+            src={logoImage} 
+            alt="Artisan's Anchor Logo" 
+            className="w-6 h-6 object-contain transition-transform duration-300 group-hover:rotate-12"
           />
           <span
             className="text-[#F5F4F0] tracking-[0.2em] uppercase text-sm"
@@ -64,7 +59,7 @@ export function Navbar() {
           >
             Artisan's Anchor
           </span>
-        </a>
+        </div>
 
         {/* ── Desktop Nav – Uiverse animated outline ── */}
         <div className="nav-outline-wrapper hidden md:block">
